@@ -10,7 +10,7 @@ export const metadata = {
 const RootLayout = ({ children }) => {
   return (
     <html lang='en'>
-      <body className='relative min-h-screen overflow-hidden'>
+      <body className='relative min-h-screen'>
         <Provider>
           <div className='main'>
             <div className='gradient'></div>

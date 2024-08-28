@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-
 import Form from '@components/Form';
+import React from 'react'; // Import React for createElement
 
 const CreatePrompt = () => {
   const router = useRouter();
@@ -18,39 +18,37 @@ const CreatePrompt = () => {
 
   const createPrompt = async (e) => {
     e.preventDefault();
-    setSubmitting(true); //use as some sort of loader later on
-    
-    try{
-      const response = await fetch('/api/prompt/new',
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            prompt: post.prompt,
-            userId: session?.user.id,
-            tag: post.tag
-          })
+    setSubmitting(true);
 
-    })
+    try {
+      const response = await fetch('/api/prompt/new', {
+        method: 'POST',
+        body: JSON.stringify({
+          prompt: post.prompt,
+          userId: session?.user.id,
+          tag: post.tag
+        })
+      });
 
-      if(response.ok) {
-        router.push('/'); //means homepage
+      if (response.ok) {
+        router.push('/');
       }
-    } catch(error){
+    } catch (error) {
       console.log(error);
-    } finally{
+    } finally {
       setSubmitting(false);
     }
-  }
+  };
 
   return (
     <Form 
-    type="Create"
-    post={post}
-    setPost={setPost}
-    submitting={submitting}
-    handleSubmit={createPrompt}
+      type="Create"
+      post={post}
+      setPost={setPost}
+      submitting={submitting}
+      handleSubmit={createPrompt}
     />
-  )
-}
+  );
+};
 
-export default CreatePrompt
+export default CreatePrompt;
