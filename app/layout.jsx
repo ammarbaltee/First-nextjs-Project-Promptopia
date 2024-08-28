@@ -1,6 +1,8 @@
+// layout.jsx
 import '@styles/globals.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
+import { Suspense } from 'react';
 
 export const metadata = {
   title: 'Promptopia',
@@ -17,7 +19,9 @@ const RootLayout = ({ children }) => {
           </div>
           <Nav />
           <main className='app'>
-            {children}
+            <Suspense fallback={<div>Loading...</div>}>
+              {children}
+            </Suspense>
           </main>
         </Provider>
       </body>

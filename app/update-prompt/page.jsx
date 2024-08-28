@@ -72,13 +72,14 @@ const EditPrompt = () => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-    <Form 
-      type="Edit"
-      post={post}
-      setPost={setPost}
-      submitting={submitting}
-      handleSubmit={updatePrompt} 
-    />
+      <Form 
+        type="Edit"
+        post={post}
+        setPost={setPost}
+        submitting={submitting}
+        isFormValid={isFormValid} // Pass the form validation state
+        handleSubmit={updatePrompt} 
+      />
     </Suspense>
   );
 }
