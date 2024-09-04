@@ -3,6 +3,7 @@ import '@styles/globals.css';
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 import { Suspense } from 'react';
+import ModalContainer from '@components/ModalContainer'; // Import the ModalContainer component
 
 export const metadata = {
   title: 'Promptopia',
@@ -22,8 +23,10 @@ const RootLayout = ({ children }) => {
             <Suspense fallback={<div>Loading...</div>}>
               {children}
             </Suspense>
+            <ModalContainer /> {/* Render the ModalContainer component */}
           </main>
         </Provider>
+        <div id="modal-root"></div> {/* Modal root container */}
       </body>
     </html>
   );

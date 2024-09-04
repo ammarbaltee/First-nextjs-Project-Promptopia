@@ -26,7 +26,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <Image
             src={creator.image || '/path/to/default-image.jpg'} // Provide a default image if creator.image is null
-            alt="user_image"
+            alt="user_image" 
             width={40}
             height={40}
             className="rounded-full object-contain"
@@ -58,6 +58,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       >
         #{post.tag}
       </p>
+      
+        {/* conditional logic combined with optional chaining to determine whether certain content should be rendered based on specific conditions.*/}
+          {/*used to display options like "Edit" and "Delete" buttons only if:
+            The logged-in user is the creator of the prompt.
+            The user is currently viewing their profile page.*/}
 
       {session?.user.id === post.creator._id && pathName === '/profile' && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">

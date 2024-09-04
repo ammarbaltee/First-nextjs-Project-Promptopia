@@ -1,22 +1,26 @@
-'use client'
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import Feed from '@components/Feed'; // Import your Feed component
 import HoverImage from '@components/HoverImage';
 import LanguageList from '@components/LanguageList';
 import DynamicButton from '@components/DynamicButton';
-import { useState } from 'react';
+import ModalContainer from '@components/ModalContainer'; // Import the Modal component
 
 const Home = () => {
   const languages1 = ['JavaScript', 'Python', 'Ruby', 'Java'];
   const languages2 = ['C++', 'C#', 'Go', 'Swift'];
 
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleButtonState = () => {
-    setIsDisabled(prevState => !prevState); {/*The function prevState => !prevState is a "functional update" pattern. 
-      prevState is the current value of the isDisabled state before the update.
-      !prevState toggles the current state value. If prevState is true, !prevState becomes false, and vice versa.*/}
+    setIsDisabled(prevState => !prevState);
   };
+
+  const [isOpen, setIsOpen] = useState(false); // Ensure state is defined
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   return (
     <section className="w-full flex-center flex-col">
@@ -44,9 +48,19 @@ const Home = () => {
       <LanguageList languages={languages1} />
       <LanguageList languages={languages2} />
 
+      <div>
+        {/* Button to open the modal */}
+        <button
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 my-10"
+          onClick={openModal}
+        >
+          Open Modal
+        </button>
+        {/* Render the ModalContainer component */}
+      <ModalContainer isOpen={isOpen} onClose={closeModal} />
+      </div>
     </section>
   );
-}
+};
 
 export default Home;
-
