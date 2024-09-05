@@ -16,6 +16,14 @@ const CreatePrompt = () => {
     tag: '',
   });
 
+  const [isFormValid, setIsFormValid] = useState(false); // Track form validity
+
+  // Check if the form is valid whenever post changes
+  useEffect(() => {
+    const isValid = post.prompt.trim() !== '' && post.tag.trim() !== ''; // Check if both fields are filled
+    setIsFormValid(isValid);
+  }, [post]);
+
   const createPrompt = async (e) => {
     e.preventDefault();
     setSubmitting(true);

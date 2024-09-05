@@ -47,7 +47,11 @@ const Feed = () => {
   
     fetchPosts();
   }, []); // Call it initially as soon as the page starts
-
+  // Define handleTagClick function here
+  const handleTagClick = (tag) => {
+    console.log(`Tag clicked: ${tag}`);
+    // Add logic to filter posts by tag, or other behavior
+  };
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -63,7 +67,7 @@ const Feed = () => {
 
       <PromptCardList
         data={posts}
-        handleTagClick={() => {}}
+        handleTagClick={handleTagClick}
       />
     </section>
   );
