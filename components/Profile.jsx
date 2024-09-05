@@ -14,6 +14,7 @@ const Profile = ({ name, desc, data, handleEdit, handleDelete }) => {
           post={post}
           handleEdit={() => handleEdit && handleEdit(post)}
           handleDelete={() => handleDelete && handleDelete(post)}
+          handleTagClick={(tag) => console.log('Tag clicked:', tag)} // Handle tag click here
         />
       ))}
     </div>

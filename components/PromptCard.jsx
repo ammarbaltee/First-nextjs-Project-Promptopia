@@ -12,10 +12,21 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
 
   const handleCopy = () => {
-    setCopied(post.prompt);
-    navigator.clipboard.writeText(post.prompt);
-    setTimeout(() => setCopied(""), 3000);
-  }
+    if (navigator.clipboard) {
+        setCopied(post.prompt);
+        navigator.clipboard.writeText(post.prompt)
+            .then(() => {
+                console.log('Text copied');
+            })
+            .catch(err => {
+                console.error('Could not copy text', err);
+            });
+        setTimeout(() => setCopied(""), 3000);
+    } else {
+        console.error('Clipboard API not supported');
+    }
+}
+
   
   // Check if post.creator exists
   const creator = post.creator || {};
@@ -54,11 +65,11 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       <p className="my-4 font-santoshi text-sm text-gray-700">{post.prompt}</p>
       <p className="font-inter text-sm blue_gradient cursor-pointer"
-        onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >
+        onClick={() => handleTagClick && handleTagClick(post.tag)} // Only call if handleTagClick exists
+      > 
         #{post.tag}
       </p>
-      
+
         {/* conditional logic combined with optional chaining to determine whether certain content should be rendered based on specific conditions.*/}
           {/*used to display options like "Edit" and "Delete" buttons only if:
             The logged-in user is the creator of the prompt.
