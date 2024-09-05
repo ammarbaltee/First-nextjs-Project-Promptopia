@@ -1,10 +1,9 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Form from '@components/Form';
-import React from 'react'; // Import React for createElement
 
 const CreatePrompt = () => {
   const router = useRouter();
@@ -15,7 +14,6 @@ const CreatePrompt = () => {
     prompt: '',
     tag: '',
   });
-
   const [isFormValid, setIsFormValid] = useState(false); // Track form validity
 
   // Check if the form is valid whenever post changes
