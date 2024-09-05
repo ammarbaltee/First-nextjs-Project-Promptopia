@@ -206,7 +206,6 @@
 
 .modal-button:hover {
   background: #005bb5;
-  z-index: 25;
 }
 
 .open-modal-button {
@@ -220,4 +219,12 @@
 
 .open-modal-button:hover {
   background: #005bb5;
+}
+
+.copy_btn img {
+  display: flex;
+  position: relative;
+  left: -112px;
+  width: 50px;
+  height: 20px;
 }
