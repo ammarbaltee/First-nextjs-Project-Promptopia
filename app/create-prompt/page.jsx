@@ -54,6 +54,7 @@ const CreatePrompt = () => {
       post={post}
       setPost={setPost}
       submitting={submitting}
+      isFormValid={isFormValid} // Pass form validity to Form component
       handleSubmit={createPrompt}
     />
   );
