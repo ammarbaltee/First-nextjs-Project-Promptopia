@@ -22,11 +22,14 @@ const PromptCardList = ({ data, handleTagClick }) => {
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]); // State for filtered posts
+  const [activeTag, setActiveTag] = useState(''); // State for the active tag filter
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
   };
 
+   // Fetch all prompts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
@@ -51,7 +54,18 @@ const Feed = () => {
   const handleTagClick = (tag) => {
     console.log(`Tag clicked: ${tag}`);
     // Add logic to filter posts by tag, or other behavior
+    setActiveTag(tag); // Set the clicked tag as the active tag
+    const filtered = posts.filter((post) => post.tag === tag); // Filter posts by the clicked tag
+    setFilteredPosts(filtered); // Update filtered posts state
   };
+  // Reset tag filtering when searchText changes (optional)
+  useEffect(() => {
+    if (searchText === '') {
+      setFilteredPosts([]); // Reset filteredPosts if searchText is cleared
+      setActiveTag(''); // Clear active tag
+    }
+  }, [searchText]);
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -65,10 +79,12 @@ const Feed = () => {
         />
       </form>
 
-      <PromptCardList
-        data={posts}
-        handleTagClick={handleTagClick}
-      />
+      {/* Render filtered posts if a tag is active, otherwise render all posts */}
+      {activeTag ? (
+        <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
+      ) : (
+        <PromptCardList data={posts} handleTagClick={handleTagClick} />
+      )}
     </section>
   );
 };

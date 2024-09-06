@@ -10,42 +10,17 @@ const Home = () => {
   const languages1 = ['JavaScript', 'Python', 'Ruby', 'Java'];
   const languages2 = ['C++', 'C#', 'Go', 'Swift'];
 
-
   const [isDisabled, setIsDisabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [allPrompts, setAllPrompts] = useState([]); // All prompts data
-  const [filteredPrompts, setFilteredPrompts] = useState([]); // Filtered prompts
 
-  // Fetch all prompts when the component mounts
-  useEffect(() => {
-    const fetchPrompts = async () => {
-      const response = await fetch('/api/prompt'); // Fetch all prompts from your API
-      const data = await response.json();
-      setAllPrompts(data);
-      setFilteredPrompts(data); // Initially, show all prompts
-    };
-
-    fetchPrompts();
-  }, []);
-
-  // Function to toggle button state
   const toggleButtonState = () => {
     setIsDisabled(prevState => !prevState);
   };
-  // Modal handlers
+
+  const [isOpen, setIsOpen] = useState(false); // Ensure state is defined
+
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
-
-  // Function to handle tag click and filter prompts by tag
-  const handleTagClick = (tag) => {
-    if (tag) {
-      const filtered = allPrompts.filter((prompt) => prompt.tag.toLowerCase() === tag.toLowerCase());
-      setFilteredPrompts(filtered);
-    } else {
-      setFilteredPrompts(allPrompts); // Reset to all prompts if no tag is selected
-    }
-  };
 
   return (
     <section className="w-full flex-center flex-col">
@@ -61,8 +36,7 @@ const Home = () => {
       {/* Image with event handlers */}
       <HoverImage />
 
-      {/* Pass handleTagClick and filteredPrompts to Feed which renders feed component*/}
-      <Feed prompts={filteredPrompts} handleTagClick={handleTagClick} />
+      <Feed /> {/* Render Feed component */}
       
       <div>
         {/* Render the DynamicButton component */}
