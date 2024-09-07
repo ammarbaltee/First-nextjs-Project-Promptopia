@@ -66,13 +66,6 @@ const Feed = () => {
     }
   };
 
-  // Reset posts when no tag is selected
-  useEffect(() => {
-    if (!selectedTag) {
-      setPosts(originalPosts);
-    }
-  }, [selectedTag, originalPosts]);
-
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
