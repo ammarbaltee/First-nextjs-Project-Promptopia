@@ -64,8 +64,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
       </div>
 
       <p className="my-4 font-santoshi text-sm text-gray-700">{post.prompt}</p>
-      <p className="font-inter text-sm blue_gradient cursor-pointer"
-        onClick={() => handleTagClick && handleTagClick(post.tag)} // Only call if handleTagClick exists
+      <p className={`font-inter text-sm cursor-pointer ${
+          selectedTag === post.tag ? 'active_tag' : 'blue_gradient'
+        }`}
+        onClick={() => handleTagClick && handleTagClick(post.tag)} // Arrow function for tag filtering. Only call if handleTagClick exists
       > 
         #{post.tag}
       </p>
