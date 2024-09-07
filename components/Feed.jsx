@@ -21,9 +21,9 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [searchText, setSearchText] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]); // State for filtered posts
-  const [activeTag, setActiveTag] = useState(''); // State for the active tag filter
+  const [posts, setPosts] = useState([]); // This is the displayed posts
+  const [originalPosts, setOriginalPosts] = useState([]); // Keep the original posts
+  const [selectedTag, setSelectedTag] = useState(''); // Track selected tag
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
