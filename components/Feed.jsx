@@ -54,9 +54,12 @@ const Feed = () => {
   const handleTagClick = (tag) => {
     console.log(`Tag clicked: ${tag}`);
     // Add logic to filter posts by tag, or other behavior
-    setActiveTag(tag); // Set the clicked tag as the active tag
-    const filtered = posts.filter((post) => post.tag === tag); // Filter posts by the clicked tag
-    setFilteredPosts(filtered); // Update filtered posts state
+    if (tag) {
+      const filtered = posts.filter((post) => post.tag === tag);
+      setFilteredPosts(filtered);
+    } else {
+      setFilteredPosts(posts); // Reset to all posts if no tag selected
+    }
   };
   // Reset tag filtering when searchText changes (optional)
   useEffect(() => {
@@ -83,7 +86,9 @@ const Feed = () => {
       {activeTag ? (
         <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
       ) : (
-        <PromptCardList data={posts} handleTagClick={handleTagClick} />
+        <PromptCardList 
+        data={posts} 
+        handleTagClick={handleTagClick} /> // Pass handleTagClick to PromptCard
       )}
     </section>
   );
