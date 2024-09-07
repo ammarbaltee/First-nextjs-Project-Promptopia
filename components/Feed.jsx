@@ -24,10 +24,6 @@ const Feed = () => {
   const [originalPosts, setOriginalPosts] = useState([]); // Keep the original posts
   const [selectedTag, setSelectedTag] = useState(''); // Track selected tag
 
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
-  };
-
   // Fetch all posts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
@@ -68,6 +64,19 @@ const Feed = () => {
     }
   };
 
+  // Handle search change to filter posts based on search text
+  const handleSearchChange = (e) => {
+    const searchValue = e.target.value.toLowerCase();
+    setSearchText(searchValue);
+
+    const filteredPosts = originalPosts.filter(
+      (post) =>
+        post.tag.toLowerCase().includes(searchValue) ||
+        post.creator.username.toLowerCase().includes(searchValue)
+    );
+    setPosts(filteredPosts);
+  };
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -75,7 +84,7 @@ const Feed = () => {
           type="text"
           placeholder="Search for a tag or username"
           value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={handleSearchChange} // Use the handleSearchChange function
           required
           className="search_input peer"
         />
