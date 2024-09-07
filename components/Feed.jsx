@@ -54,6 +54,7 @@ const Feed = () => {
   const handleTagClick = (tag) => {
     console.log(`Tag clicked: ${tag}`);
     // Add logic to filter posts by tag, or other behavior
+    setSelectedTag(tag);
     if (tag) {
       const filtered = posts.filter((post) => post.tag === tag);
       setFilteredPosts(filtered);
