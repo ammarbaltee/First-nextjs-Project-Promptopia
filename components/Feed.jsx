@@ -50,25 +50,27 @@ const Feed = () => {
   
     fetchPosts();
   }, []); // Call it initially as soon as the page starts
-  // Define handleTagClick function here
-  const handleTagClick = (tag) => {
-    console.log(`Tag clicked: ${tag}`);
-    // Add logic to filter posts by tag, or other behavior
-    setSelectedTag(tag);
-    if (tag) {
-      const filtered = posts.filter((post) => post.tag === tag);
-      setFilteredPosts(filtered);
+   // Handle tag click to filter posts
+   const handleTagClick = (tag) => {
+    setSelectedTag(tag); // Set the selected tag
+    if (tag === '') {
+      // If tag is empty, reset to original posts
+      setPosts(originalPosts);
     } else {
-      setFilteredPosts(posts); // Reset to all posts if no tag selected
+      // Filter posts based on the clicked tag
+      const filteredPosts = originalPosts.filter((post) =>
+        post.tag.toLowerCase() === tag.toLowerCase()
+      );
+      setPosts(filteredPosts);
     }
   };
-  // Reset tag filtering when searchText changes (optional)
+
+  // Reset posts when no tag is selected
   useEffect(() => {
-    if (searchText === '') {
-      setFilteredPosts([]); // Reset filteredPosts if searchText is cleared
-      setActiveTag(''); // Clear active tag
+    if (!selectedTag) {
+      setPosts(originalPosts);
     }
-  }, [searchText]);
+  }, [selectedTag, originalPosts]);
 
   return (
     <section className="feed">
