@@ -79,6 +79,8 @@ const Feed = () => {
 
   return (
     <section className="feed">
+      {/* Show the currently selected tag */}
+      {selectedTag && <div>Selected Tag: {selectedTag}</div>} 
       <form className="relative w-full flex-center">
         <input
           type="text"
