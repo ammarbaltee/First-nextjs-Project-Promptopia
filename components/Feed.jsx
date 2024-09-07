@@ -50,6 +50,7 @@ const Feed = () => {
   
     fetchPosts();
   }, []); // Call it initially as soon as the page starts
+
    // Handle tag click to filter posts
    const handleTagClick = (tag) => {
     setSelectedTag(tag); // Set the selected tag
@@ -79,15 +80,15 @@ const Feed = () => {
           type="text"
           placeholder="Search for a tag or username"
           value={searchText}
-          onChange={handleSearchChange}
+          onChange={(e) => setSearchText(e.target.value)}
           required
           className="search_input peer"
         />
       </form>
 
       {/* Render filtered posts if a tag is active, otherwise render all posts */}
-      {activeTag ? (
-        <PromptCardList data={filteredPosts} handleTagClick={handleTagClick} />
+      {selectedTag ? (
+        <PromptCardList data={posts} handleTagClick={handleTagClick} />
       ) : (
         <PromptCardList 
         data={posts} 
