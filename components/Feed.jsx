@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
 import PromptCard from './PromptCard';
 
 // Define the PromptCardList component
@@ -29,12 +28,11 @@ const Feed = () => {
     setSearchText(e.target.value);
   };
 
-   // Fetch all prompts when the component mounts
+  // Fetch all posts when the component mounts
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
       
-      // Check if response is ok and log it
       if (!response.ok) {
         console.error('Error fetching posts:', await response.text());
         return;
@@ -43,6 +41,8 @@ const Feed = () => {
       try {
         const data = await response.json();
         setPosts(data);
+        setOriginalPosts(data);  // Set the original posts as well
+        console.log('Fetched posts:', data);  // Debug log for posts
       } catch (err) {
         console.error('Failed to parse JSON:', err);
       }
@@ -51,8 +51,9 @@ const Feed = () => {
     fetchPosts();
   }, []); // Call it initially as soon as the page starts
 
-   // Handle tag click to filter posts
-   const handleTagClick = (tag) => {
+  // Handle tag click to filter posts
+  const handleTagClick = (tag) => {
+    console.log('Tag clicked:', tag); // Debug log for clicked tag
     setSelectedTag(tag); // Set the selected tag
     if (tag === '') {
       // If tag is empty, reset to original posts
@@ -63,6 +64,7 @@ const Feed = () => {
         post.tag.toLowerCase() === tag.toLowerCase()
       );
       setPosts(filteredPosts);
+      console.log('Filtered posts:', filteredPosts); // Debug log for filtered posts
     }
   };
 
@@ -80,9 +82,10 @@ const Feed = () => {
       </form>
 
       {/* Render posts */}
-        <PromptCardList 
+      <PromptCardList 
         data={posts} 
-        handleTagClick={handleTagClick} /> // Pass handleTagClick to PromptCard
+        handleTagClick={handleTagClick} 
+      />
     </section>
   );
 };
