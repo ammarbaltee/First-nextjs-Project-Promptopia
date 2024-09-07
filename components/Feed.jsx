@@ -86,14 +86,10 @@ const Feed = () => {
         />
       </form>
 
-      {/* Render filtered posts if a tag is active, otherwise render all posts */}
-      {selectedTag ? (
-        <PromptCardList data={posts} handleTagClick={handleTagClick} />
-      ) : (
+      {/* Render posts */}
         <PromptCardList 
         data={posts} 
         handleTagClick={handleTagClick} /> // Pass handleTagClick to PromptCard
-      )}
     </section>
   );
 };
