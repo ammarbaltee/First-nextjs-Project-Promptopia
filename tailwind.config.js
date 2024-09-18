@@ -26,6 +26,8 @@ export const theme = {
       'gray-50': '#D9D9D9',
       // Adding gray-600 to the custom colors
       'gray-600': '#4B5563', // This is the default Tailwind gray-600 color
+      // Adding gray-200 for border color
+      'gray-200': '#E5E7EB', // This is the default Tailwind gray-200 color
     },
     boxShadow: {
       menu: '0px 159px 95px rgba(13,12,34,0.01), 0px 71px 71px rgba(13,12,34,0.02), 0px 18px 39px rgba(13,12,34,0.02), 0px 0px 0px rgba(13,12,34,0.02)',
