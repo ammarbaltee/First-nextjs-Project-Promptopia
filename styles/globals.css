@@ -4,31 +4,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 
-  Note: The styles for this gradient grid background is heavily inspired by the creator of this amazing site (https://dub.sh) – all credits go to them! 
-*/
-
+/* Utility classes for paddings */
 @layer utilities {
   .paddings {
     @apply lg:px-20 py-6 px-5;
   }
 }
 
+/* Main background section with gradient and grid overlay */
 .main {
   width: 100vw;
   min-height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1; /* Ensures .main is behind other content */
+  z-index: -1;
   display: flex;
   justify-content: center;
   padding: 120px 24px 160px 24px;
-  pointer-events: none; /* Ensures .main does not capture any mouse events */
-  
+  pointer-events: none; 
 }
 
-/* Gradient background */
+/* Gradient background layer */
 .main:before {
   background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
   position: absolute;
@@ -39,7 +36,7 @@
   top: 0;
 }
 
-/* Grid overlay */
+/* Grid overlay on the background */
 .main:after {
   content: "";
   background-image: url("/assets/images/grid.svg");
@@ -52,15 +49,12 @@
   filter: invert(1);
 }
 
+/* Gradient effect on the content */
 .gradient {
-  height: fit-content;
   z-index: 3;
-  width: 100%;
   max-width: 640px;
   background-image: radial-gradient(
-      at 27% 37%,
-      hsla(215, 98%, 61%, 1) 0px,
-      transparent 0%
+      at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%
     ),
     radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
     radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
@@ -69,7 +63,6 @@
     radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
     radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
   position: absolute;
-  content: "";
   width: 100%;
   height: 100%;
   filter: blur(100px) saturate(150%);
@@ -83,12 +76,12 @@
   }
 }
 
-/* Tailwind Styles */
-
+/* General Layout */
 .app {
   @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
 }
 
+/* Button styles */
 .black_btn {
   @apply rounded-full border border-black bg-black py-1.5 px-5 text-white hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
@@ -97,6 +90,7 @@
   @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
 }
 
+/* Text styles */
 .head_text {
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
@@ -117,15 +111,18 @@
   @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
 }
 
+/* Input styles */
 .search_input {
   @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
 }
 
+/* Copy button */
 .copy_btn {
   @apply w-7 h-7 rounded-full bg-white/10 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur cursor-pointer;
-  display: contents; 
+  display: contents;
 }
 
+/* Glassmorphism styling */
 .glassmorphism {
   @apply rounded-xl border border-gray-200 bg-white/20 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
 }
@@ -182,7 +179,7 @@
   @apply flex justify-between items-center;
 }
 
-/* Styles for the modal overlay and content */
+/* Modal styling */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -236,9 +233,10 @@
   height: 20px;
 }
 
+/* Active tag style */
 .active_tag {
-  background-color: #007bff; /* Change background */
-  color: white; /* Change text color */
+  background-color: #007bff;
+  color: white;
   padding: 2px 6px;
   border-radius: 4px;
 }
