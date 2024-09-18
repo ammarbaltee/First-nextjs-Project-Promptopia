@@ -4,6 +4,7 @@ import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 import { Suspense } from 'react';
 import ModalContainer from '@components/ModalContainer'; // Import the ModalContainer component
+import Footer from '@components/Footer';
 
 export const metadata = {
   title: 'Promptopia',
@@ -26,6 +27,7 @@ const RootLayout = ({ children }) => {
             <ModalContainer /> {/* Render the ModalContainer component */}
           </main>
         </Provider>
+        <Footer />
         <div id="modal-root"></div> {/* Modal root container */}
       </body>
     </html>

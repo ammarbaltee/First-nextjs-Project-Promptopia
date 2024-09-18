@@ -50,9 +50,9 @@ const Nav = () => {
               Object.values(providers).map((provider)=> (
                 <button 
                   type="button" 
-                  key={provider.name} 
-                  onClick={() => signIn(provider.id)} 
-                  className='black_btn'
+                  key={provider.name}  
+                  onClick={() => signIn(provider.id)} //it will redirect the user to the chosen provider’s login page (e.g., Google, GitHub).
+                  className='black_btn' 
                 >
                   Sign In
                 </button>

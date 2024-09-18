@@ -11,24 +11,25 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, selectedTa
 
   const [copied, setCopied] = useState("");
 
+  // Function to handle copying the prompt to clipboard
   const handleCopy = () => {
     if (navigator.clipboard) {
-        setCopied(post.prompt);
-        navigator.clipboard.writeText(post.prompt)
+        setCopied(post.prompt); // Set the copied state to the prompt text
+        navigator.clipboard.writeText(post.prompt) // Copy the prompt text to clipboard
             .then(() => {
                 console.log('Text copied');
             })
             .catch(err => {
                 console.error('Could not copy text', err);
             });
-        setTimeout(() => setCopied(""), 3000);
+        setTimeout(() => setCopied(""), 3000);  // Reset the copied state after 3 seconds
     } else {
         console.error('Clipboard API not supported');
     }
 }
 
   
-  // Check if post.creator exists
+  // Check if the creator data exists, provide fallback if not
   const creator = post.creator || {};
 
   return (
@@ -67,8 +68,9 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete, selectedTa
       <p className={`font-inter text-sm cursor-pointer ${
           selectedTag === post.tag ? 'active_tag' : 'blue_gradient'
         }`}
-        onClick={() => handleTagClick && handleTagClick(post.tag)} // Arrow function for tag filtering. Only call if handleTagClick exists
-      > 
+        onClick={() => handleTagClick && handleTagClick(post.tag)} 
+      > {/* Arrow function for tag filtering. Only call if handleTagClick exists 
+          Send the tag to the parent component using the callback*/}
         #{post.tag}
       </p>
 

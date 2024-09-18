@@ -5,6 +5,7 @@ import HoverImage from '@components/HoverImage';
 import LanguageList from '@components/LanguageList';
 import DynamicButton from '@components/DynamicButton';
 import ModalContainer from '@components/ModalContainer'; // Import the Modal component
+import Footer from '@components/Footer';
 
 const Home = () => {
   const languages1 = ['JavaScript', 'Python', 'Ruby', 'Java'];
@@ -59,6 +60,7 @@ const Home = () => {
         {/* Render the ModalContainer component */}
       <ModalContainer isOpen={isOpen} onClose={closeModal} />
       </div>
+      <Footer />
     </section>
   );
 };
