@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react';
 import PromptCard from './PromptCard';
 
 // Define the PromptCardList component
-const PromptCardList = ({ data, handleTagClick }) => {
+const PromptCardList = ({ data, handleTagClick, selectedTag }) => {
   return (
     <div className="mt-16 prompt_layout">
-
       {/* Map over the data (posts) and pass each post to PromptCard */}
       {data.map((post) => (
         <PromptCard
@@ -21,10 +20,10 @@ const PromptCardList = ({ data, handleTagClick }) => {
   );
 };
 
-const Feed = () => {
+const Feed = ({ initialPosts, handleTagClick: parentHandleTagClick }) => {
   const [searchText, setSearchText] = useState(''); // State for storing the search input
-  const [posts, setPosts] = useState([]); // State for storing the displayed posts
-  const [originalPosts, setOriginalPosts] = useState([]); // State for storing the original unfiltered posts
+  const [posts, setPosts] = useState(initialPosts || []); // State for storing the displayed posts
+  const [originalPosts, setOriginalPosts] = useState(initialPosts || []); // State for storing the original unfiltered posts
   const [selectedTag, setSelectedTag] = useState(''); // State for tracking the selected tag
 
   // Fetch all posts when the component mounts
@@ -98,7 +97,7 @@ const Feed = () => {
 
       {/* Render posts */}
       <PromptCardList 
-        data={posts} // // Pass the current (filtered) posts to display
+        data={posts} // Pass the current (filtered) posts to display
         handleTagClick={handleTagClick} // Pass the callback function to handle tag clicks
         selectedTag={selectedTag}  // Pass the selected tag to highlight it in the child component
       />
