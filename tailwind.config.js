@@ -20,14 +20,17 @@ export const theme = {
       'light-white-400': '#E2E5F1',
       'light-white-500': '#E4E4E4',
       gray: '#4D4A4A',
+      'gray-50': '#D9D9D9',
       'gray-100': '#3d3d4e',
       'black-100': '#252525',
       'primary-purple': '#9747FF',
-      'gray-50': '#D9D9D9',
-      // Adding gray-600 to the custom colors
-      'gray-600': '#4B5563', // This is the default Tailwind gray-600 color
       // Adding gray-200 for border color
       'gray-200': '#E5E7EB', // This is the default Tailwind gray-200 color
+      'gray-300': '#D1D5DB', 
+      'gray-400': '#9CA3AF', 
+      'gray-500': '#6B7280', // added to match text-gray-500
+      // Adding gray-600 to the custom colors
+      'gray-600': '#4B5563', // This is the default Tailwind gray-600 color
     },
     boxShadow: {
       menu: '0px 159px 95px rgba(13,12,34,0.01), 0px 71px 71px rgba(13,12,34,0.02), 0px 18px 39px rgba(13,12,34,0.02), 0px 0px 0px rgba(13,12,34,0.02)',
