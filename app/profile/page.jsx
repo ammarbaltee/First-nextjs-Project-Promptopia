@@ -38,37 +38,34 @@ const MyProfile = () => {
   }
       
   const handleDelete = async (post) => {
-    // Ensure _id is a string
-  const postId = post._id ? post._id.toString() : null;
-
-  if (!postId) {
-    console.error('Post ID is missing');
-    return;
-  }
-
+    // Ensure post has an _id field
+    if (!post._id) {
+      console.error('Post object does not have _id:', post);
+      return;
+    }
+  
+    // Convert _id to string if necessary
+    const postId = post._id.toString();
+  
     const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
-    if(hasConfirmed) {
+    if (hasConfirmed) {
       try {
-        // Make DELETE request to the backend
-        const response = await fetch(`/api/prompt/${post._id}`, {
+        const response = await fetch(`/api/prompt/${postId}`, {
           method: 'DELETE',
         });
-
-        // Check if response is ok
-      if (!response.ok) {
-        console.error('Failed to delete the prompt:', await response.text());
-        return; // Stop execution if the request fails
-      }
-
-        // Filter out the deleted post from the state
-        const filteredPosts = posts.filter((p) => p._id !== post._id);
-
+  
+        if (!response.ok) {
+          throw new Error(`Failed to delete prompt: ${response.statusText}`);
+        }
+  
+        // Update the state to remove the deleted post
+        const filteredPosts = posts.filter((p) => p._id.toString() !== postId);
         setPosts(filteredPosts);
       } catch (error) {
-        console.log(error);
+        console.error('Failed to delete the prompt:', error);
       }
     }
-  }
+  };
   
   return (
     <Profile 
