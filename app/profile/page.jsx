@@ -38,8 +38,15 @@ const MyProfile = () => {
   }
       
   const handleDelete = async (post) => {
-    const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
+    // Ensure _id is a string
+  const postId = post._id ? post._id.toString() : null;
 
+  if (!postId) {
+    console.error('Post ID is missing');
+    return;
+  }
+
+    const hasConfirmed = confirm("Are you sure you want to delete this prompt?");
     if(hasConfirmed) {
       try {
         // Make DELETE request to the backend
