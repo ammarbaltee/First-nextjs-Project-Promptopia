@@ -37,7 +37,7 @@ const MyProfile = () => {
     router.push(`/update-prompt?id=${post._id}/`)
   }
       
-  const handleDelete = async (post) => {
+  const handleDelete = async (postId) => {
     console.log('Post object received for deletion:', post); // Debugging line
 
   // Ensure post has an _id field
