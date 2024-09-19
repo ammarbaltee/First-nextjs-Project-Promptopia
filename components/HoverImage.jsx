@@ -4,7 +4,7 @@ import React from 'react';
 
 const HoverImage = () => {
 function handleMouseOver(e) {
-    e.target.setAttribute('src', '/assets/images/al_khor slide.jpg');
+    e.target.setAttribute('src', '/assets/images/AI Prompts.png');
     e.target.setAttribute('alt', 'Updated image');
   }
 
