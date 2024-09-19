@@ -54,7 +54,7 @@ export const DELETE = async (request, { params }) => {
         if (!postId) {
             return new Response('Post ID is missing', { status: 400 });
           }
-        const prompt = await Prompt.findByIdAndRemove(params.id);
+          const prompt = await Prompt.findByIdAndDelete(postId);
 
         if (!prompt) {
             return new Response('Prompt not found', { status: 404 });
