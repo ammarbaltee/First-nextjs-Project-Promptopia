@@ -43,7 +43,7 @@ const MyProfile = () => {
     if(hasConfirmed) {
       try {
         // Make DELETE request to the backend
-        const response = await fetch(`/api/prompt/${post._idtoString()}`, {
+        const response = await fetch(`/api/prompt/${post._id.toString()}`, {
           method: 'DELETE',
         });
 
