@@ -20,7 +20,7 @@ const PromptCardList = ({ data, handleTagClick, selectedTag, handleDelete }) => 
   );
 };
 
-const Feed = ({ posts, handleDelete }) => {
+const Feed = ({ handleDelete }) => {
   const [searchText, setSearchText] = useState(''); // State for search input
   const [posts, setPosts] = useState([]); // State for displayed posts
   const [originalPosts, setOriginalPosts] = useState([]); // State for original, unfiltered posts

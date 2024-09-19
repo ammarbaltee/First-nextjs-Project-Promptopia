@@ -56,7 +56,7 @@ const Home = () => {
       {/* Image with event handlers */}
       <HoverImage />
 
-      <Feed posts={posts} handleDelete={handleDelete}/> {/* Render Feed component */}
+      <Feed handleDelete={handleDelete}/> {/* Render Feed component */}
       
       <div>
         {/* Render the DynamicButton component */}
