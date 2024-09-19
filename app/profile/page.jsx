@@ -38,10 +38,12 @@ const MyProfile = () => {
   }
       
   const handleDelete = async (post) => {
-    // Ensure post has an _id field
-    if (!post._id) {
-      console.error('Post object does not have _id:', post);
-      return;
+    console.log('Post object received for deletion:', post); // Debugging line
+
+  // Ensure post has an _id field
+  if (!post._id) {
+    console.error('Post object does not have _id:', post);
+    return;
     }
   
     // Convert _id to string if necessary
