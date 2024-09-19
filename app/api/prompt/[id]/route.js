@@ -6,8 +6,13 @@ export const GET = async (request, { params }) => {
     try {
         await connectToDB();
 
-        const prompt = await Prompt.findById(params.id).populate('creator');
-        if(!prompt) return new Response("Prompt not found", {status: 400})
+        const prompts = await Prompt.find({ creator: params.id }).populate('creator');
+    
+        // Ensure _id is included in each post
+        const posts = prompts.map(prompt => ({
+          ...prompt.toObject(),
+          _id: prompt._id.toString() // Ensure _id is a string
+        }));
 
         return new Response(JSON.stringify(prompt), { status: 200 })
     } catch (error) {
@@ -44,8 +49,11 @@ export const DELETE = async (request, { params }) => {
     console.log('Params ID:', params.id); // Log to check the value
     try {
         await connectToDB();
-
+        const postId = params.id; // Ensure this matches the ID in the URL
         // Find and delete the prompt by ID 
+        if (!postId) {
+            return new Response('Post ID is missing', { status: 400 });
+          }
         const prompt = await Prompt.findByIdAndRemove(params.id);
 
         if (!prompt) {
