@@ -7,99 +7,117 @@ import PromptCard from './PromptCard';
 const PromptCardList = ({ data, handleTagClick, selectedTag }) => {
   return (
     <div className="mt-16 prompt_layout">
-      {/* Map over the data (posts) and pass each post to PromptCard */}
       {data.map((post) => (
         <PromptCard
           key={post._id}
-          post={post} // Data for the current post
-          handleTagClick={handleTagClick} // Pass the handleTagClick callback to the child component
-          selectedTag={selectedTag}  // Pass the selectedTag state to the child component
+          post={post}
+          handleTagClick={handleTagClick}
+          selectedTag={selectedTag}
         />
       ))}
     </div>
   );
 };
 
-const Feed = ({ initialPosts, handleTagClick: parentHandleTagClick }) => {
-  const [searchText, setSearchText] = useState(''); // State for storing the search input
-  const [posts, setPosts] = useState(initialPosts || []); // State for storing the displayed posts
-  const [originalPosts, setOriginalPosts] = useState(initialPosts || []); // State for storing the original unfiltered posts
-  const [selectedTag, setSelectedTag] = useState(''); // State for tracking the selected tag
+const Feed = () => {
+  const [searchText, setSearchText] = useState(''); // State for search input
+  const [posts, setPosts] = useState([]); // State for displayed posts
+  const [originalPosts, setOriginalPosts] = useState([]); // State for original, unfiltered posts
+  const [selectedTag, setSelectedTag] = useState(''); // State for selected tag
 
-  // Fetch all posts when the component mounts
+  // Fetch all posts on component mount
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch('/api/prompt');
-      
+
       if (!response.ok) {
         console.error('Error fetching posts:', await response.text());
         return;
       }
-  
+
       try {
-        const data = await response.json(); // Parse the response JSON
-        setPosts(data); // Set the posts in the state
-        setOriginalPosts(data);  // Keep a copy of the original posts in the state
-        console.log('Fetched posts:', data);  // Debug log for posts
+        const data = await response.json(); // Parse response JSON
+        setPosts(data); // Set the fetched posts
+        setOriginalPosts(data); // Store original posts for filtering
+        console.log('Fetched posts:', data);
       } catch (err) {
         console.error('Failed to parse JSON:', err);
       }
     };
-  
-    fetchPosts(); // Trigger the fetch
-  }, []); // Call it initially as soon as the page starts/component mounts
+
+    fetchPosts();
+  }, []);
 
   // Handle tag click to filter posts
   const handleTagClick = (tag) => {
-    console.log('Tag clicked:', tag); // Debug log for clicked tag
+    console.log('Tag clicked:', tag);
     setSelectedTag(tag); // Set the selected tag
-    if (tag === '') {
-      // If no tag is selected, reset the posts to the original list
-      setPosts(originalPosts);
-    } else {
-      // Filter posts based on the clicked tag
-      const filteredPosts = originalPosts.filter((post) =>
-        post.tag.toLowerCase() === tag.toLowerCase()
-      );
-      setPosts(filteredPosts); // Update the posts with the filtered ones
-      console.log('Filtered posts:', filteredPosts); // Debug log for filtered posts
-    }
+    setSearchText(''); // Reset search when tag is clicked
+
+    // Filter posts based on the clicked tag
+    const filteredPosts = originalPosts.filter((post) =>
+      post.tag.toLowerCase() === tag.toLowerCase()
+    );
+    setPosts(filteredPosts); // Update posts with filtered posts
   };
 
-  // Handle search input change to filter posts by tag or username
+  // Handle search input to filter posts by tag or username
   const handleSearchChange = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearchText(searchValue);
-
-    // Filter posts based on tag or creator username
-    const filteredPosts = originalPosts.filter(
-      (post) =>
-        post.tag.toLowerCase().includes(searchValue) ||
-        post.creator.username.toLowerCase().includes(searchValue)
-    );
+  
+    // Filter based on search input and selected tag (if any)
+    const filteredPosts = originalPosts.filter((post) => {
+      // Check if the post.creator and post.creator.username exist
+      const hasCreator = post.creator && post.creator.username;
+      
+      return (
+        (selectedTag === '' || post.tag.toLowerCase() === selectedTag.toLowerCase()) &&
+        (
+          post.tag.toLowerCase().includes(searchValue) ||
+          (hasCreator && post.creator.username.toLowerCase().includes(searchValue))
+        )
+      );
+    });
+    
     setPosts(filteredPosts);
+  };
+  
+  // Reset the posts when the user clears the search input
+  const resetFilters = () => {
+    setSearchText('');
+    setSelectedTag('');
+    setPosts(originalPosts);
   };
 
   return (
     <section className="feed">
-      {/* Display the currently selected tag if one is chosen */}
-      {selectedTag && <div>Selected Tag: {selectedTag}</div>} 
+      {/* Show selected tag and clear button */}
+      {selectedTag && (
+        <div>
+          <span>Selected Tag: {selectedTag}</span>
+          <button onClick={resetFilters} className="ml-2 text-blue-500 underline">
+            Clear Filters
+          </button>
+        </div>
+      )}
+
       <form className="relative w-full flex-center">
         <input
           type="text"
           placeholder="Search for a tag or username"
           value={searchText}
-          onChange={handleSearchChange} // Trigger the search filter on input change
+          onChange={handleSearchChange} // Trigger filtering on input change
           required
           className="search_input peer"
         />
       </form>
 
-      {/* Render posts */}
-      <PromptCardList 
-        data={posts} // Pass the current (filtered) posts to display
-        handleTagClick={handleTagClick} // Pass the callback function to handle tag clicks
-        selectedTag={selectedTag}  // Pass the selected tag to highlight it in the child component
+      {/* Render the filtered posts */}
+      <PromptCardList
+        data={posts} // Pass current posts to display
+        handleTagClick={handleTagClick} // Handle tag clicks for filtering
+        selectedTag={selectedTag} // Pass selected tag for styling or highlighting
       />
     </section>
   );
