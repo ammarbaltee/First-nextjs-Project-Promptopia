@@ -42,10 +42,18 @@ const MyProfile = () => {
 
     if(hasConfirmed) {
       try {
-        await fetch(`/api/prompt/${post._id.toString()}`, {
-          method: 'DELETE'
+        // Make DELETE request to the backend
+        const response = await fetch(`/api/prompt/${post._idtoString()}`, {
+          method: 'DELETE',
         });
 
+        // Check if response is ok
+      if (!response.ok) {
+        console.error('Failed to delete the prompt:', await response.text());
+        return; // Stop execution if the request fails
+      }
+
+        // Filter out the deleted post from the state
         const filteredPosts = posts.filter((p) => p._id !== post._id);
 
         setPosts(filteredPosts);
