@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import PromptCard from './PromptCard';
 
 // Define the PromptCardList component
-const PromptCardList = ({ data, handleTagClick, selectedTag }) => {
+const PromptCardList = ({ data, handleTagClick, selectedTag, handleDelete }) => {
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
@@ -20,7 +20,7 @@ const PromptCardList = ({ data, handleTagClick, selectedTag }) => {
   );
 };
 
-const Feed = () => {
+const Feed = ({ posts, handleDelete }) => {
   const [searchText, setSearchText] = useState(''); // State for search input
   const [posts, setPosts] = useState([]); // State for displayed posts
   const [originalPosts, setOriginalPosts] = useState([]); // State for original, unfiltered posts
@@ -60,26 +60,6 @@ const Feed = () => {
       post.tag.toLowerCase() === tag.toLowerCase()
     );
     setPosts(filteredPosts); // Update posts with filtered posts
-  };
-
-  // Handle post deletion
-  const handleDelete = async (postId) => {
-    try {
-      const response = await fetch(`/api/prompt/${postId}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        console.error('Error deleting the post:', await response.text());
-        return;
-      }
-
-      // Remove the deleted post from the state
-      setPosts(posts.filter(post => post._id !== postId));
-      setOriginalPosts(originalPosts.filter(post => post._id !== postId));
-    } catch (err) {
-      console.error('Failed to delete the post:', err);
-    }
   };
 
   // Handle search input to filter posts by tag or username

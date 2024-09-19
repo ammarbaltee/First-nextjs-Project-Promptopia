@@ -22,6 +22,26 @@ const Home = () => {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  // Handle post deletion
+  const handleDelete = async (postId) => {
+    try {
+      const response = await fetch(`/api/prompt/${postId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        console.error('Error deleting the post:', await response.text());
+        return;
+      }
+
+      // Remove the deleted post from the state
+      setPosts(posts.filter(post => post._id !== postId));
+      setOriginalPosts(originalPosts.filter(post => post._id !== postId));
+    } catch (err) {
+      console.error('Failed to delete the post:', err);
+    }
+  };
+
   return (
     <section className="w-full flex-center flex-col">
       <h1 className="head_text text-center">
@@ -36,7 +56,7 @@ const Home = () => {
       {/* Image with event handlers */}
       <HoverImage />
 
-      <Feed /> {/* Render Feed component */}
+      <Feed posts={posts} handleDelete={handleDelete}/> {/* Render Feed component */}
       
       <div>
         {/* Render the DynamicButton component */}
