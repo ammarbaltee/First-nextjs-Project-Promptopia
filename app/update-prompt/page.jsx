@@ -14,6 +14,7 @@ const EditPrompt = () => {
     prompt: '',
     tag: '',
   });
+  const [isFormValid, setIsFormValid] = useState(false); // State for form validation
 
   useEffect(() => {
     console.log("Prompt ID:", promptId); // Add this line for debugging
@@ -44,6 +45,12 @@ const EditPrompt = () => {
 
     if (promptId) getPromptDetails();
   }, [promptId]);
+
+  useEffect(() => {
+    // Validate form whenever post changes
+    const isValid = post.prompt.trim() !== '' && post.tag.trim() !== '';
+    setIsFormValid(isValid);
+  }, [post]);
 
   const updatePrompt = async (e) => {
     e.preventDefault();
