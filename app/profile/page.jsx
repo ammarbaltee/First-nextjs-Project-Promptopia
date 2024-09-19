@@ -57,7 +57,7 @@ const MyProfile = () => {
   
   return (
     <Profile 
-        name="My"
+        name={session?.user?.name || 'User'}  // Use the user's name from the session data
         desc="Welcome to your personlized Profile page"
         data={posts}
         handleEdit={handleEdit}
