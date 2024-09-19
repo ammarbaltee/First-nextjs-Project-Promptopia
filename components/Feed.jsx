@@ -13,6 +13,7 @@ const PromptCardList = ({ data, handleTagClick, selectedTag }) => {
           post={post}
           handleTagClick={handleTagClick}
           selectedTag={selectedTag}
+          handleDelete={handleDelete} // Pass the delete function
         />
       ))}
     </div>
@@ -59,6 +60,26 @@ const Feed = () => {
       post.tag.toLowerCase() === tag.toLowerCase()
     );
     setPosts(filteredPosts); // Update posts with filtered posts
+  };
+
+  // Handle post deletion
+  const handleDelete = async (postId) => {
+    try {
+      const response = await fetch(`/api/prompt/${postId}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        console.error('Error deleting the post:', await response.text());
+        return;
+      }
+
+      // Remove the deleted post from the state
+      setPosts(posts.filter(post => post._id !== postId));
+      setOriginalPosts(originalPosts.filter(post => post._id !== postId));
+    } catch (err) {
+      console.error('Failed to delete the post:', err);
+    }
   };
 
   // Handle search input to filter posts by tag or username
@@ -118,6 +139,7 @@ const Feed = () => {
         data={posts} // Pass current posts to display
         handleTagClick={handleTagClick} // Handle tag clicks for filtering
         selectedTag={selectedTag} // Pass selected tag for styling or highlighting
+        handleDelete={handleDelete} // Pass the delete function to PromptCardList
       />
     </section>
   );
