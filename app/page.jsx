@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { PostProvider } from '../hooks/PostContext'; // Import the PostProvider
 import Feed from '@components/Feed'; // Import your Feed component
 import HoverImage from '@components/HoverImage';
 import LanguageList from '@components/LanguageList';
@@ -10,76 +11,46 @@ const Home = () => {
   const languages1 = ['JavaScript', 'Python', 'Ruby', 'Java'];
   const languages2 = ['C++', 'C#', 'Go', 'Swift'];
 
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const toggleButtonState = () => {
-    setIsDisabled(prevState => !prevState);
-  };
-
-  const [isOpen, setIsOpen] = useState(false); // Ensure state is defined
+  const [isOpen, setIsOpen] = useState(false); // State for modal visibility
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  // Handle post deletion
-  const handleDelete = async (postId) => {
-    try {
-      const response = await fetch(`/api/prompt/${postId}`, {
-        method: 'DELETE',
-      });
-
-      if (!response.ok) {
-        console.error('Error deleting the post:', await response.text());
-        return;
-      }
-
-      // Remove the deleted post from the state
-      setPosts(posts.filter(post => post._id !== postId));
-      setOriginalPosts(originalPosts.filter(post => post._id !== postId));
-    } catch (err) {
-      console.error('Failed to delete the post:', err);
-    }
-  };
-
   return (
-    <section className="w-full flex-center flex-col">
-      <h1 className="head_text text-center">
-        Discover & Share AI Prompt
-        <br className="max-md:hidden" />
-        <span className="orange_gradient text-center"> AI-Powered Prompts </span>
-      </h1>
-      <p className="desc text-center">
+    <PostProvider>
+      <section className="w-full flex-center flex-col">
+        <h1 className="head_text text-center">
+          Discover & Share AI Prompt
+          <br className="max-md:hidden" />
+          <span className="orange_gradient text-center"> AI-Powered Prompts </span>
+        </h1>
+        <p className="desc text-center">
         Promptopia is an open-source AI tool for the modern world to discover, create, and share creative prompts.
-      </p>
-       
-      {/* Image with event handlers */}
-      <HoverImage />
+        </p>
+         
+        <HoverImage />
+        
+        <Feed /> {/* Render Feed component */}
+        
+        <div>
+          <p className="mb-4">This is where you can interact with the dynamic button below:</p>
+          <DynamicButton />
+        </div>
 
-      <Feed handleDelete={handleDelete}/> {/* Render Feed component */}
-      
-      <div>
-        {/* Render the DynamicButton component */}
-        <p className="mb-4">This is where you can interact with the dynamic button below:</p>
-        <DynamicButton />
-      </div>
+        <LanguageList languages={languages1} />
+        <LanguageList languages={languages2} />
 
-      {/* Use the LanguageList component multiple times with different data */}
-      <LanguageList languages={languages1} />
-      <LanguageList languages={languages2} />
-
-      <div>
-        {/* Button to open the modal */}
-        <button
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 my-10"
-          onClick={openModal}
-        >
-          Open Modal
-        </button>
-        {/* Render the ModalContainer component */}
-      <ModalContainer isOpen={isOpen} onClose={closeModal} />
-      </div>
-    </section>
+        <div>
+          <button
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 my-10"
+            onClick={openModal}
+          >
+            Open Modal
+          </button>
+          <ModalContainer isOpen={isOpen} onClose={closeModal} />
+        </div>
+      </section>
+    </PostProvider>
   );
 };
 
